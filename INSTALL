@@ -1,4 +1,4 @@
-This is a shellscript, the only installation procedure is to 
+fargo2hnb is a shellscript, so the installation procedure is quite simple:
 
 1. Make sure you have bourne shell in /bin/sh
 
