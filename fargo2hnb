@@ -1,0 +1,136 @@
+#!/bin/sh
+
+#  fargo2hnb 	 Fargo.io to hnb importing
+#		 Imports OPML files generated with fargo.io from Dropbox to hnb (hierarchical notebook)
+#		 Optionally generates an HTML file combining the imported files
+#  Requirements: Bourne shell, wget or curl
+#
+#  Copyright 2013 Joaquin Herrero Pintado. All rights reserved.
+#  This software is BSD-licensed. See LICENSE file.
+
+# Dummies use no arguments, they're asking for help
+if [ $# -eq "" ] 
+then
+	echo "Usage: `basename $0` -d <path to datafile> -t <path to destination dir> -m <wget|curl> [-i]"
+	echo "Options:"
+        echo "    -f   Path to file containing one URL per line"
+        echo "    -t   Path to directory where hnb file will be created"
+        echo "    -m   Method for downloading files: wget or curl"
+        echo "    -n   Name of hnb database to create/update"
+	echo "    -i   (optional) if present create hnb file in iso-8859-1 format instead of utf-8"
+	echo "    -d   (optional) if present delete OPML files downloaded, keep only hnb file created"
+	echo "    -k   (optional) if present keep existing hnb database selected with -n and append content"
+	echo "    -w   (optional) if present generate HTML page with the content of the hnb database generated"
+	echo "Example:"
+	echo "$ `basename $0` -f /home/data/opmlfiles.txt -t /home -m wget -n myhnb -i -w"
+	exit ;
+fi
+
+# Yes, many options. It could be worse.
+while getopts "f:t:m:n:idkw" Option
+do
+	case $Option in
+
+		f )
+			_FILES_TO_PROCESS=$OPTARG;;
+		t )
+			_DESTDIR=$OPTARG;;
+		m )
+			_DOWNLOAD_METHOD=$OPTARG;;
+		n )
+			_HNBREPO=$OPTARG;;
+		i )
+			_CONVERT_TO_ISO=YES;;
+		d )
+			_DELETE_OPML=YES;;
+		k )
+			_KEEP_HNB=YES;;
+		w )
+			_WWW=YES;;
+		? )
+			print "Enter `basename $0` with no arguments for help screen"
+			exit 1;;
+	esac
+done
+	
+
+# Create temp file
+_TEMP1=`mktemp -t f2h.XXXXXX`
+if [ $? -ne 0 ]; then
+   rm -f $_TEMP1
+   exit 1
+fi
+echo "Using $_TEMP1"
+
+# -k option
+if [ "$_KEEP_HNB" != "YES" ]; then
+	rm $_DESTDIR/$_HNBREPO
+fi
+
+# Here we go
+while read LINE
+do
+
+	let count++
+
+	_FILEURI=$LINE
+	_FILENAME=`echo $_FILEURI | awk -F'/' '/\.opml$/ {print $NF}'`
+	echo -n "$_FILENAME "
+
+	# -m option
+	echo -n "downloading "
+	if [ $_DOWNLOAD_METHOD == "curl" ]; then
+		curl $_FILEURI -s -L -o $_TEMP1
+	elif [ $_DOWNLOAD_METHOD == "wget" ]; then
+		 wget  --quiet --no-check-certificate $_FILEURI -O $_TEMP1
+	else
+		print >&2 "Download method not implemented -m $_DOWNLOAD_METHOD"
+		exit 1
+	fi
+
+	# -i option
+	if [ "$_CONVERT_TO_ISO" == "YES" ]; then
+		echo -n "converting "
+		iconv -f utf-8 -t iso-8859-15 $_TEMP1 >  $_DESTDIR/$_FILENAME
+	else
+		cp $_TEMP1 $_DESTDIR/$_FILENAME
+	fi
+
+
+	# ** make sure the following lines are tabulated, not spaced **
+	# ** otherwise the here document fragment will not work **
+	# hnb import
+	echo "importing "
+	hnb $_DESTDIR/$_HNBREPO -ui cli <<-EOF 
+	add "$_FILENAME"
+	addc "$_FILENAME" "Imported from Dropbox $_FILEURI"
+	cd "$_FILENAME"
+	import_opml $_DESTDIR/$_FILENAME
+	save
+	quit
+	EOF
+
+	# -d option
+	if [ "$_DELETE_OPML" == "YES" ]; then
+		rm $_DESTDIR/$_FILENAME
+		echo -n "deleted "
+	fi
+	echo "done"
+
+done < $_FILES_TO_PROCESS
+
+# So Long, and Thanks for All the Fish
+rm -f $_TEMP1
+echo
+
+# -w option
+if [ "$_WWW" == "YES" ]; then
+	_HTMLFILE=$_DESTDIR/$_HNBREPO.html
+	hnb $_DESTDIR/$_HNBREPO -ui cli -e "export_html $_HTMLFILE"
+	echo "Created HTML file $_HTMLFILE"
+fi
+
+# Hey we've finished
+echo "Created outline $_DESTDIR/$_HNBREPO from $count files"
+echo "END"
+
