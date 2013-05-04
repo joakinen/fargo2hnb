@@ -1,11 +1,65 @@
-fargo2hnb
+NAME
+	fargo2hnb - Fargo to hnb importer
 
-fargo2hnb is a shellscript for importing OPML files generated using fargo.io 
-into hnb (hierarchical notebook), a curses outliner for using in command line
-terminals.
+SYNOPSIS
+	fargo2hnb [options] 
 
-See http://hnb.sourceforge.net
+DESCRIPTION
+	fargo2hnb is a shellscript for importing OPML files generated using 
+	Fargo (an online outliner) into hnb (hierarchical notebook), a curses 
+	outliner for using in command line terminals.
 
-Optionally fargo2hnb can create a HTML file combining the files downloaded.
 
-For a list of options just execute it with no parameters.
+	fargo2hnb creates a new hnb database (or updates an existing one) that 
+	will contain all of the outlines imported, each one under a different 
+	branch in hnb, named after the file it came from. 
+	
+	Before using fargo2hnb you will need to generate in Fargo public links 
+	from each file you may want to import into hnb and then create a text 
+	file in the same computer you will execute fargo2hnb containing all of 
+	the links, one link per line. 
+	
+	Optionally fargo2hnb can create a HTML file combining the files 
+	downloaded with an indentation scheme corresponding to the outline.
+	
+	For downloading the files from dropbox you only need wget or curl 
+	installed on your computer.
+	
+	For a list of options just execute it with no parameters.
+
+OPTIONS
+	fargo2hnb can be invoked with the following options:
+
+	-f   Path to file containing one URL per line
+
+	-t   Path to directory where hnb file will be created
+
+	-m   Method for downloading files: wget or curl
+
+	-n   Name of hnb database to create/update
+
+	-i   (optional) if present create hnb file in iso-8859-1 format 
+	     instead of utf-8
+
+	-d   (optional) if present delete OPML files downloaded, 
+	     keep only hnb file created
+
+	-k   (optional) if present keep existing hnb database selected with -n 
+	     and append content
+
+	-w   (optional) if present generate HTML page with the content of the 
+	     hnb database generated
+
+FILES
+       fargo2hnb
+	      The shellscript
+
+SEE ALSO
+	See http://hnb.sourceforge.net for more information on hnb
+
+	See http://smallpicture.com/fargoDocs.html for more information on Fargo 
+
+AUTHOR
+       fargo2hnb was written by Joaquin Herrero Pintado <jherrero@creativecodeworks.com>.
+
+
