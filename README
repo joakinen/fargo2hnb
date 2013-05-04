@@ -51,8 +51,14 @@ OPTIONS
 	     hnb database generated
 
 FILES
-       fargo2hnb
+	fargo2hnb
 	      The shellscript
+
+	INSTALL
+	      Installation instructions and dependencies
+
+	README
+	      This file
 
 SEE ALSO
 	See http://hnb.sourceforge.net for more information on hnb
