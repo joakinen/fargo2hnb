@@ -56,13 +56,23 @@ FILES
 	INSTALL
 	      Installation instructions and dependencies
 
+	LICENSE
+	      This software is BSD licensed. 
+	      The LICENSE file contains the complete text of the license.
+
 	README
-	      This file
+	      This file.
 
 SEE ALSO
 	See http://hnb.sourceforge.net for more information on hnb
 
 	See http://smallpicture.com/fargoDocs.html for more information on Fargo 
+
+BUGS
+	Sure, but not identified yet.
+
+LIMITATIONS
+	You can only use Bourne shell for executing this script.
 
 AUTHOR
 	fargo2hnb was written by Joaquin Herrero Pintado 
