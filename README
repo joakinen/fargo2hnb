@@ -16,7 +16,8 @@ DESCRIPTION
 	Before using fargo2hnb you will need to generate in Fargo public links 
 	for each file you may want to import into hnb and then create a text 
 	file in the same computer you will execute fargo2hnb containing all of 
-	the links, one link per line. 
+	the links, one link per line. You may write comments in the file using
+	the symbol # as first character of the line and they won't be processed.
 	
 	Optionally fargo2hnb can create a HTML file combining the files 
 	downloaded with an indentation scheme corresponding to the outline.

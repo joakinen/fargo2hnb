@@ -71,9 +71,14 @@ fi
 while read LINE
 do
 
+	# Skip comments in file
+	[[ `echo $LINE|cut -c1-1` == '#' ]] && continue
+
 	let count++
 
 	_FILEURI=$LINE
+
+
 	_FILENAME=`echo $_FILEURI | awk -F'/' '/\.opml$/ {print $NF}'`
 	echo -n "$_FILENAME "
 
