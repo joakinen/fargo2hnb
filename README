@@ -21,8 +21,8 @@ DESCRIPTION
 	Optionally fargo2hnb can create a HTML file combining the files 
 	downloaded with an indentation scheme corresponding to the outline.
 	
-	For downloading the files from dropbox you only need wget or curl 
-	installed on your computer.
+	For downloading the files from your Dropbox repository you will only 
+	need wget or curl installed on your computer.
 	
 	For a list of options just execute it with no parameters.
 
