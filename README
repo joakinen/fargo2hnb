@@ -9,7 +9,6 @@ DESCRIPTION
 	Fargo (an online outliner) into hnb (hierarchical notebook), a curses 
 	outliner for using in command line terminals.
 
-
 	fargo2hnb creates a new hnb database (or updates an existing one) that 
 	will contain all of the outlines imported, each one under a different 
 	branch in hnb, named after the file it came from. 
