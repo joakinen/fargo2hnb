@@ -1,0 +1,17 @@
+This is a shellscript, the only installation procedure is to 
+
+1. Make sure you have bourne shell in /bin/sh
+
+2. Make fargo2hnb executable
+   
+   $ chmod 555 fargo2hnb
+
+   Permission 555 is a good guess. It allows you any user to execute
+   but you are unable to modify or delete it accidentally.
+
+3. copy it into a directory in your PATH variable
+   (such as /usr/local/bin or similar)
+
+   $ cp fargo2hnb /usr/local/bin
+
+4. Enjoy!
