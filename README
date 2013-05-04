@@ -14,7 +14,7 @@ DESCRIPTION
 	branch in hnb, named after the file it came from. 
 	
 	Before using fargo2hnb you will need to generate in Fargo public links 
-	from each file you may want to import into hnb and then create a text 
+	for each file you may want to import into hnb and then create a text 
 	file in the same computer you will execute fargo2hnb containing all of 
 	the links, one link per line. 
 	
