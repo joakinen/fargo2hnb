@@ -1,7 +1,11 @@
 fargo2hnb
 
 fargo2hnb is a shellscript for importing OPML files generated using fargo.io 
-into hnb (hierarchical notebook), an curses outliner for using in command line
+into hnb (hierarchical notebook), a curses outliner for using in command line
 terminals.
 
-Optionally it can also generate an HTML file combining the files downloaded.
+See http://hnb.sourceforge.net
+
+Optionally fargo2hnb can create a HTML file combining the files downloaded.
+
+For a list of options just execute it with no parameters.
